@@ -1,9 +1,8 @@
 import de.bezier.guido.*;
-//Declare and initialize NUM_ROWS and NUM_COLS = 20
 private MSButton[][] buttons; //2d array of minesweeper buttons
 private ArrayList <MSButton> bombs; //ArrayList of just the minesweeper buttons that are mined
-private int NUM_ROWS = 20;
-private int NUM_COLS = 20;
+private final static int NUM_ROWS = 20;
+private final static int NUM_COLS = 20;
 
 void setup ()
 {
@@ -24,7 +23,7 @@ void setup ()
     }
     
     
-    setBombs(20);
+    setBombs(50);
 }
 public void setBombs(int total)
 {
@@ -36,21 +35,10 @@ public void setBombs(int total)
         if(!(bombs.contains(buttons[row][col])))
         {
             bombs.add(buttons[row][col]);
-            System.out.println(row + ", " + col);
+            // System.out.println(row + ", " + col);
             num++;
         }
     }
-
-    // for(int i =0; i<10;i++)
-    // {
-    //     int row = (int)(Math.random()*NUM_ROWS);
-    //     int col = (int)(Math.random()*NUM_COLS);
-    //     if(!(bombs.contains(buttons[row][col])))
-    //     {
-    //         bombs.add(buttons[row][col]);
-    //         System.out.println(row + ", " + col);
-    //     }
-    // }
 
 }
 
@@ -63,6 +51,7 @@ public void draw ()
 public boolean isWon()
 {
     //your code here
+    
     return false;
 }
 public void displayLosingMessage()
@@ -117,10 +106,24 @@ public class MSButton
             displayLosingMessage();
         else if(countBombs(r,c) > 0)
             setLabel("" + countBombs(r, c) + "");
-        else {
-            if(isValid(r-1, c-1) == true && buttons[r-1][c-1].isClicked() == true);
+        else{
+            if(isValid(r-1, c-1) == true && buttons[r-1][c-1].isClicked() == false)
                 buttons[r-1][c-1].mousePressed();
-        }
+            if(isValid(r-1, c) == true && buttons[r-1][c].isClicked() == false)
+                buttons[r-1][c].mousePressed();
+            if(isValid(r-1, c+1) == true && buttons[r-1][c+1].isClicked() == false)
+                buttons[r-1][c+1].mousePressed();
+            if(isValid(r, c-1) == true && buttons[r][c-1].isClicked() == false)
+                buttons[r][c-1].mousePressed();
+            if(isValid(r, c+1) == true && buttons[r][c+1].isClicked() == false)
+                buttons[r][c+1].mousePressed();
+            if(isValid(r+1, c-1) == true && buttons[r+1][c-1].isClicked() == false)
+                buttons[r+1][c-1].mousePressed();
+            if(isValid(r+1, c) == true && buttons[r+1][c].isClicked() == false)
+                buttons[r+1][c].mousePressed();
+            if(isValid(r-1, c+1) == true && buttons[r+1][c+1].isClicked() == false)
+                buttons[r+1][c+1].mousePressed();
+            }
         
     }
 
@@ -129,13 +132,14 @@ public class MSButton
         if (marked)
             fill(0);
         else if( clicked && bombs.contains(this) ) 
-            fill(255,0,0);
+            fill(254, 60, 5);
         else if(clicked)
-            fill( 200 );
+            fill(255);
         else 
-            fill( 100 );
+            fill(7, 128, 246);
 
-        rect(x, y, width, height);
+        stroke(200);
+        rect(x, y, width, height, 5);
         fill(0);
         text(label,x+width/2,y+height/2);
     }
@@ -145,7 +149,7 @@ public class MSButton
     }
     public boolean isValid(int r, int c)
     {
-        if(r <= NUM_ROWS && c <= NUM_COLS)
+        if(0<= r && 0<=c && r < NUM_ROWS && c < NUM_COLS)
             return true;
         return false;
     }
