@@ -11,6 +11,11 @@ body {
     margin-right: auto
 }
 
+h3{
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    color: rgb(253, 215, 76);
+}
+
 header {
 	font-family: Impact, Charcoal, sans-serif;
 }
