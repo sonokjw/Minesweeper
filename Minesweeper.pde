@@ -140,8 +140,8 @@ public class MSButton
     public boolean isMarked()
     {
         if(mousePressed && mouseButton == RIGHT)
-            return marked;
-        return !marked;
+            marked = !marked;
+        return marked;
 
     }
     public boolean isClicked()
@@ -188,14 +188,14 @@ public class MSButton
 
     public void draw () 
     {
-        if (marked)
-        {
-            fill(253, 215, 76);
-        }
-        else if( clicked && bombs.contains(this) ) 
+        if( clicked && bombs.contains(this) ) 
             fill(253, 0, 35);
         else if(clicked)
             fill(255);
+        else if (marked == true)
+        {
+            fill(253, 215, 76);
+        }
         else 
             fill(7, 128, 246);
 
