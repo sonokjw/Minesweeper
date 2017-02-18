@@ -7,7 +7,7 @@ private int numberofbombs = 50;
 
 void setup ()
 {
-    size(400, 400);
+    size(500, 500);
     textAlign(CENTER,CENTER);
     bombs = new ArrayList <MSButton>();
     // make the manager
@@ -127,8 +127,8 @@ public class MSButton
     
     public MSButton ( int rr, int cc )
     {
-        width = 400/NUM_COLS;
-        height = 400/NUM_ROWS;
+        width = 500/NUM_COLS;
+        height = 500/NUM_ROWS;
         r = rr;
         c = cc; 
         x = c*width;
