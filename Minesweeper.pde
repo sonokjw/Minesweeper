@@ -4,6 +4,7 @@ private ArrayList <MSButton> bombs; //ArrayList of just the minesweeper buttons 
 private final static int NUM_ROWS = 20;
 private final static int NUM_COLS = 20;
 private int numberofbombs = 30;
+private PImage img;
 
 void setup ()
 {
@@ -92,12 +93,7 @@ public void displayWinningMessage()
     fill(255, 232, 0);
     for(int co =1; co<19; co++)
         buttons[9][co].setLabel(win.substring(co-1, co));
-    for(int i = 0; i<bombs.size(); i++)
-    {
-        bombs.get(i).marked = !(bombs.get(i).marked);
 
-
-    }
 }
 
 public void keyPressed()
@@ -139,10 +135,7 @@ public class MSButton
     }
     public boolean isMarked()
     {
-        if(mousePressed && mouseButton == RIGHT)
-            marked = !marked;
         return marked;
-
     }
     public boolean isClicked()
     {
@@ -152,50 +145,46 @@ public class MSButton
     
     public void mousePressed () 
     {
-        if(mouseButton == LEFT)
+        clicked = true;
+        if(keyPressed)
         {
-            clicked = true;
-            if(bombs.contains(this))
-                displayLosingMessage();
-            else if(countBombs(r,c) > 0)
-                setLabel("" + countBombs(r, c) + "");
-            else{
-                if(isValid(r-1, c-1) == true && buttons[r-1][c-1].isClicked() == false)
-                    buttons[r-1][c-1].mousePressed();
-                if(isValid(r-1, c) == true && buttons[r-1][c].isClicked() == false)
-                    buttons[r-1][c].mousePressed();
-                if(isValid(r-1, c+1) == true && buttons[r-1][c+1].isClicked() == false)
-                    buttons[r-1][c+1].mousePressed();
-                if(isValid(r, c-1) == true && buttons[r][c-1].isClicked() == false)
-                    buttons[r][c-1].mousePressed();
-                if(isValid(r, c+1) == true && buttons[r][c+1].isClicked() == false)
-                    buttons[r][c+1].mousePressed();
-                if(isValid(r+1, c-1) == true && buttons[r+1][c-1].isClicked() == false)
-                    buttons[r+1][c-1].mousePressed();
-                if(isValid(r+1, c) == true && buttons[r+1][c].isClicked() == false)
-                    buttons[r+1][c].mousePressed();
-                if(isValid(r+1, c+1) == true && buttons[r+1][c+1].isClicked() == false)
-                    buttons[r+1][c+1].mousePressed();
-            }
+            if(key == 'm' || key == 'M')
+                marked = !marked;
         }
-
-        else
-        {
-            marked = true;
+        else if(bombs.contains(this))
+            displayLosingMessage();
+        else if(countBombs(r,c) > 0)
+            setLabel("" + countBombs(r, c) + "");
+        else{
+            if(isValid(r-1, c-1) == true && buttons[r-1][c-1].isClicked() == false)
+                buttons[r-1][c-1].mousePressed();
+            if(isValid(r-1, c) == true && buttons[r-1][c].isClicked() == false)
+                buttons[r-1][c].mousePressed();
+            if(isValid(r-1, c+1) == true && buttons[r-1][c+1].isClicked() == false)
+                buttons[r-1][c+1].mousePressed();
+            if(isValid(r, c-1) == true && buttons[r][c-1].isClicked() == false)
+                buttons[r][c-1].mousePressed();
+            if(isValid(r, c+1) == true && buttons[r][c+1].isClicked() == false)
+                buttons[r][c+1].mousePressed();
+            if(isValid(r+1, c-1) == true && buttons[r+1][c-1].isClicked() == false)
+                buttons[r+1][c-1].mousePressed();
+            if(isValid(r+1, c) == true && buttons[r+1][c].isClicked() == false)
+                buttons[r+1][c].mousePressed();
+            if(isValid(r+1, c+1) == true && buttons[r+1][c+1].isClicked() == false)
+                buttons[r+1][c+1].mousePressed();
         }
-        
     }
 
     public void draw () 
     {
-        if( clicked && bombs.contains(this) ) 
-            fill(253, 0, 35);
-        else if(clicked)
-            fill(255);
-        else if (marked == true)
+        if (marked == true)
         {
             fill(253, 215, 76);
         }
+        else if( clicked && bombs.contains(this) ) 
+            fill(253, 0, 35);
+        else if(clicked)
+            fill(255);
         else 
             fill(7, 128, 246);
 
