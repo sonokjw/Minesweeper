@@ -5,6 +5,7 @@ private final static int NUM_ROWS = 20;
 private final static int NUM_COLS = 20;
 private int numberofbombs = 30;
 private PImage img;
+private boolean gameover = false;
 
 void setup ()
 {
@@ -71,6 +72,7 @@ public boolean isWon()
 
 public void displayLosingMessage()
 {
+    gameover = true;
     textSize(16);
     String lose = "SORRY! TRY AGAIN!";
     for(int co = 2; co < 19; co++)
@@ -88,6 +90,7 @@ public void displayLosingMessage()
 }
 public void displayWinningMessage()
 {
+    gameover = true;
     String win = "Congrats! You won!";
     textSize(16);
     fill(255, 232, 0);
@@ -100,6 +103,7 @@ public void keyPressed()
 {
     if(key == 'r')
     {
+        gameover = false;
         buttons = new MSButton[NUM_ROWS][NUM_COLS];
         for(int row = 0; row<NUM_ROWS;row++)
         {
@@ -145,43 +149,46 @@ public class MSButton
     
     public void mousePressed () 
     {
-        clicked = true;
-        if(keyPressed)
+        if(keyPressed && clicked == false)
         {
             if(key == 'm' || key == 'M')
                 marked = !marked;
         }
-        else if(bombs.contains(this))
-            displayLosingMessage();
-        else if(countBombs(r,c) > 0)
-            setLabel("" + countBombs(r, c) + "");
-        else{
-            if(isValid(r-1, c-1) == true && buttons[r-1][c-1].isClicked() == false)
-                buttons[r-1][c-1].mousePressed();
-            if(isValid(r-1, c) == true && buttons[r-1][c].isClicked() == false)
-                buttons[r-1][c].mousePressed();
-            if(isValid(r-1, c+1) == true && buttons[r-1][c+1].isClicked() == false)
-                buttons[r-1][c+1].mousePressed();
-            if(isValid(r, c-1) == true && buttons[r][c-1].isClicked() == false)
-                buttons[r][c-1].mousePressed();
-            if(isValid(r, c+1) == true && buttons[r][c+1].isClicked() == false)
-                buttons[r][c+1].mousePressed();
-            if(isValid(r+1, c-1) == true && buttons[r+1][c-1].isClicked() == false)
-                buttons[r+1][c-1].mousePressed();
-            if(isValid(r+1, c) == true && buttons[r+1][c].isClicked() == false)
-                buttons[r+1][c].mousePressed();
-            if(isValid(r+1, c+1) == true && buttons[r+1][c+1].isClicked() == false)
-                buttons[r+1][c+1].mousePressed();
+        else
+        {
+            clicked = true;
+            if(bombs.contains(this))
+                displayLosingMessage();
+            else if(countBombs(r,c) > 0)
+                setLabel("" + countBombs(r, c) + "");
+            else{
+                if(isValid(r-1, c-1) == true && buttons[r-1][c-1].isClicked() == false)
+                    buttons[r-1][c-1].mousePressed();
+                if(isValid(r-1, c) == true && buttons[r-1][c].isClicked() == false)
+                    buttons[r-1][c].mousePressed();
+                if(isValid(r-1, c+1) == true && buttons[r-1][c+1].isClicked() == false)
+                    buttons[r-1][c+1].mousePressed();
+                if(isValid(r, c-1) == true && buttons[r][c-1].isClicked() == false)
+                    buttons[r][c-1].mousePressed();
+                if(isValid(r, c+1) == true && buttons[r][c+1].isClicked() == false)
+                    buttons[r][c+1].mousePressed();
+                if(isValid(r+1, c-1) == true && buttons[r+1][c-1].isClicked() == false)
+                    buttons[r+1][c-1].mousePressed();
+                if(isValid(r+1, c) == true && buttons[r+1][c].isClicked() == false)
+                    buttons[r+1][c].mousePressed();
+                if(isValid(r+1, c+1) == true && buttons[r+1][c+1].isClicked() == false)
+                    buttons[r+1][c+1].mousePressed();
+            }
         }
     }
 
     public void draw () 
     {
-        if (marked == true)
+        if (marked == true && clicked == false && gameover == false)
         {
             fill(253, 215, 76);
         }
-        else if( clicked && bombs.contains(this) ) 
+        else if( clicked && bombs.contains(this) == true) 
             fill(253, 0, 35);
         else if(clicked)
             fill(255);
